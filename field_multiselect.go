@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 	"time"
+	"container/list"
 
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/spinner"
@@ -24,10 +25,13 @@ type MultiSelect[T comparable] struct {
 	title           Eval[string]
 	description     Eval[string]
 	options         Eval[[]Option[T]]
+	orderedOptions  *list.List
 	filterable      bool
 	filteredOptions []Option[T]
 	limit           int
 	height          int
+	optionsMap      map[int]*list.Element
+	preserveOrder   bool
 
 	// error handling
 	validate func([]T) error
@@ -56,16 +60,18 @@ func NewMultiSelect[T comparable]() *MultiSelect[T] {
 	s := spinner.New(spinner.WithSpinner(spinner.Line))
 
 	return &MultiSelect[T]{
-		accessor:    &EmbeddedAccessor[[]T]{},
-		validate:    func([]T) error { return nil },
-		filtering:   false,
-		filter:      filter,
-		id:          nextID(),
-		options:     Eval[[]Option[T]]{cache: make(map[uint64][]Option[T])},
-		title:       Eval[string]{cache: make(map[uint64]string)},
-		description: Eval[string]{cache: make(map[uint64]string)},
-		spinner:     s,
-		filterable:  true,
+		accessor:       &EmbeddedAccessor[[]T]{},
+		validate:       func([]T) error { return nil },
+		filtering:      false,
+		filter:         filter,
+		id:             nextID(),
+		options:        Eval[[]Option[T]]{cache: make(map[uint64][]Option[T])},
+		title:          Eval[string]{cache: make(map[uint64]string)},
+		description:    Eval[string]{cache: make(map[uint64]string)},
+		spinner:        s,
+		filterable:     true,
+		orderedOptions: list.New(),
+		preserveOrder:  false,
 	}
 }
 
@@ -188,6 +194,11 @@ func (m *MultiSelect[T]) Height(height int) *MultiSelect[T] {
 // Validate sets the validation function of the multi-select field.
 func (m *MultiSelect[T]) Validate(validate func([]T) error) *MultiSelect[T] {
 	m.validate = validate
+	return m
+}
+
+func (m *MultiSelect[T]) OptionsOrder(preserve bool) *MultiSelect[T] {
+	m.preserveOrder = preserve
 	return m
 }
 
@@ -390,6 +401,14 @@ func (m *MultiSelect[T]) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					selected := m.options.val[i].selected
 					m.options.val[i].selected = !selected
 					m.filteredOptions[m.cursor].selected = !selected
+					if selected {
+						node := m.orderedOptions.PushBack(i)
+						m.optionsMap[i] = node
+					} else {
+						node := m.optionsMap[i]
+						m.orderedOptions.Remove(node)
+						delete(m.optionsMap, i)
+					}
 				}
 			}
 			m.setSelectAllHelp()
@@ -491,11 +510,19 @@ func (m *MultiSelect[T]) numFilteredSelected() int {
 
 func (m *MultiSelect[T]) updateValue() {
 	value := make([]T, 0)
-	for _, option := range m.options.val {
-		if option.selected {
+	if m.preserveOrder {
+		for e := m.orderedOptions.Front(); e != nil; e = e.Next() {
+			option := m.options.val[e.Value.(int)]
 			value = append(value, option.Value)
 		}
+	} else {
+		for _, option := range m.options.val {
+			if option.selected {
+				value = append(value, option.Value)
+			}
+		}
 	}
+	fmt.Println("Test2121")
 	m.accessor.Set(value)
 	m.err = m.validate(m.accessor.Get())
 }
