@@ -1,4 +1,4 @@
-module github.com/charmbracelet/huh/spinner
+module github.com/samarth-iitb/huh_ordered_multiselect/spinner
 
 go 1.19
 

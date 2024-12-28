@@ -1,4 +1,4 @@
-module github.com/charmbracelet/huh
+module github.com/samarth-iitb/huh_ordered_multiselect
 
 go 1.21
 
