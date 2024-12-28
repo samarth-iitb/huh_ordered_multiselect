@@ -9,7 +9,7 @@ import (
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/bubbles/textarea"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/huh/accessibility"
+	"github.com/samarth-iitb/huh_ordered_multiselect/accessibility"
 	"github.com/charmbracelet/lipgloss"
 )
 

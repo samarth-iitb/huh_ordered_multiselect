@@ -6,8 +6,8 @@ require (
 	github.com/charmbracelet/bubbles v0.20.0
 	github.com/charmbracelet/bubbletea v1.2.5-0.20241205214244-9306010a31ee
 	github.com/charmbracelet/glamour v0.8.0
-	github.com/charmbracelet/huh v0.0.0-00010101000000-000000000000
-	github.com/charmbracelet/huh/spinner v0.0.0-00010101000000-000000000000
+	github.com/samarth-iitb/huh_ordered_multiselect v0.0.0-00010101000000-000000000000
+	github.com/samarth-iitb/huh_ordered_multiselect/spinner v0.0.0-00010101000000-000000000000
 	github.com/charmbracelet/lipgloss v1.0.0
 	github.com/charmbracelet/log v0.4.0
 	github.com/charmbracelet/ssh v0.0.0-20241211182756-4fe22b0f1b7c
@@ -59,6 +59,6 @@ require (
 	golang.org/x/text v0.21.0 // indirect
 )
 
-replace github.com/charmbracelet/huh => ../
+replace github.com/samarth-iitb/huh_ordered_multiselect => ../
 
-replace github.com/charmbracelet/huh/spinner => ../spinner
+replace github.com/samarth-iitb/huh_ordered_multiselect/spinner => ../spinner

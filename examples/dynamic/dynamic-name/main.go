@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/charmbracelet/huh"
+	"github.com/samarth-iitb/huh_ordered_multiselect"
 )
 
 func main() {

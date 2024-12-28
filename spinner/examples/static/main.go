@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/charmbracelet/huh/spinner"
+	"github.com/samarth-iitb/huh_ordered_multiselect/spinner"
 )
 
 func main() {

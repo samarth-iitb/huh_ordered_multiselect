@@ -1,6 +1,6 @@
 package main
 
-import "github.com/charmbracelet/huh"
+import "github.com/samarth-iitb/huh_ordered_multiselect"
 
 // TODO: ensure input is not plagiarized.
 func checkForPlagiarism(s string) error { return nil }

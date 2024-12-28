@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/charmbracelet/huh"
+	"github.com/samarth-iitb/huh_ordered_multiselect"
 )
 
 type consumable int

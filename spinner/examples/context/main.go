@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/charmbracelet/huh/spinner"
+	"github.com/samarth-iitb/huh_ordered_multiselect/spinner"
 )
 
 func main() {

@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/charmbracelet/huh"
-	"github.com/charmbracelet/huh/spinner"
+	"github.com/samarth-iitb/huh_ordered_multiselect"
+	"github.com/samarth-iitb/huh_ordered_multiselect/spinner"
 	"github.com/charmbracelet/lipgloss"
 )
 
